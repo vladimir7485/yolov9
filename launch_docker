@@ -3,8 +3,7 @@ IMAGE=nvidia_pytorch_23.10-py3:v7
 CODE_DIR=/home/vladimir/Code
 HOST_DIR=/home/vladimir
 
-LANEDET_WORKBENCH=${LANEDET_WORKBENCH}
-KROMKA_WORKBENCH=${KROMKA_WORKBENCH}
+YOLO9_WORKBENCH=/home/vladimir/Work/Projects/yolo9
 
 xhost +
 
@@ -14,11 +13,10 @@ docker run \
 --ipc host \
 --gpus all \
 --runtime=nvidia \
--e LANEDET_WORKBENCH=${HOST_DIR}/board_detect \
--v ${LANEDET_WORKBENCH}/data:${HOST_DIR}/board_detect/data \
--v ${LANEDET_WORKBENCH}/models:${HOST_DIR}/board_detect/models \
--v ${KROMKA_WORKBENCH}/data:${HOST_DIR}/edge_detect/data \
--v ${KROMKA_WORKBENCH}/models:${HOST_DIR}/edge_detect/models \
+-e YOLO9_WORKBENCH=${HOST_DIR}/yolo9 \
+-v ${YOLO9_WORKBENCH}/data:${HOST_DIR}/yolo9/data \
+-v ${YOLO9_WORKBENCH}/models:${HOST_DIR}/yolo9/models \
 -v ${CODE_DIR}:${HOST_DIR}/code \
+-v /home/vladimir/Work/Datasets:${HOST_DIR}/yolo9/datasets \
 -u $(id -u ${USER}):$(id -g ${USER}) \
 ${IMAGE} bash
