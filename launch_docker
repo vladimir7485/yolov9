@@ -1,0 +1,24 @@
+IMAGE=nvidia_pytorch_23.10-py3:v7
+
+CODE_DIR=/home/vladimir/Code
+HOST_DIR=/home/vladimir
+
+LANEDET_WORKBENCH=${LANEDET_WORKBENCH}
+KROMKA_WORKBENCH=${KROMKA_WORKBENCH}
+
+xhost +
+
+docker run \
+-it \
+--rm \
+--ipc host \
+--gpus all \
+--runtime=nvidia \
+-e LANEDET_WORKBENCH=${HOST_DIR}/board_detect \
+-v ${LANEDET_WORKBENCH}/data:${HOST_DIR}/board_detect/data \
+-v ${LANEDET_WORKBENCH}/models:${HOST_DIR}/board_detect/models \
+-v ${KROMKA_WORKBENCH}/data:${HOST_DIR}/edge_detect/data \
+-v ${KROMKA_WORKBENCH}/models:${HOST_DIR}/edge_detect/models \
+-v ${CODE_DIR}:${HOST_DIR}/code \
+-u $(id -u ${USER}):$(id -g ${USER}) \
+${IMAGE} bash
