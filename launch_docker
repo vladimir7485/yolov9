@@ -1,4 +1,4 @@
-IMAGE=nvidia_pytorch_23.10-py3:v7
+IMAGE=nvidia_pytorch_23.10-py3:v9
 
 HOST_DIR=/home/vladimir
 
@@ -15,8 +15,7 @@ docker run \
 --runtime=nvidia \
 -v /home/vladimir/Code:${HOST_DIR}/code \
 -v /home/vladimir/Work/Datasets:${HOST_DIR}/datasets \
--v ${YOLO9_WORKBENCH}/data:${HOST_DIR}/yolo9/data \
--v ${YOLO9_WORKBENCH}/models:${HOST_DIR}/yolo9/models \
+-v ${YOLO9_WORKBENCH}:${HOST_DIR}/yolo9 \
 -e YOLO9_WORKBENCH=${HOST_DIR}/yolo9 \
 -u $(id -u ${USER}):$(id -g ${USER}) \
 ${IMAGE} bash
