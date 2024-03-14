@@ -1,6 +1,5 @@
 IMAGE=nvidia_pytorch_23.10-py3:v7
 
-CODE_DIR=/home/vladimir/Code
 HOST_DIR=/home/vladimir
 
 YOLO9_WORKBENCH=/home/vladimir/Work/Projects/yolo9
@@ -9,14 +8,15 @@ xhost +
 
 docker run \
 -it \
+-p 8889:8889 \
 --rm \
 --ipc host \
 --gpus all \
 --runtime=nvidia \
--e YOLO9_WORKBENCH=${HOST_DIR}/yolo9 \
+-v /home/vladimir/Code:${HOST_DIR}/code \
+-v /home/vladimir/Work/Datasets:${HOST_DIR}/datasets \
 -v ${YOLO9_WORKBENCH}/data:${HOST_DIR}/yolo9/data \
 -v ${YOLO9_WORKBENCH}/models:${HOST_DIR}/yolo9/models \
--v ${CODE_DIR}:${HOST_DIR}/code \
--v /home/vladimir/Work/Datasets:${HOST_DIR}/yolo9/datasets \
+-e YOLO9_WORKBENCH=${HOST_DIR}/yolo9 \
 -u $(id -u ${USER}):$(id -g ${USER}) \
 ${IMAGE} bash
