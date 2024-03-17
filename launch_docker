@@ -10,6 +10,7 @@ docker run \
 -it \
 -p 8889:8889 \
 --rm \
+--shm-size=64g \
 --ipc host \
 --gpus all \
 --runtime=nvidia \
