@@ -6,9 +6,9 @@ python  train_dual.py \
     --weights /home/vladimir/yolo9/models/yolov9-c.pt \
     --workers 8 \
     --cfg models/detect/yolov9-c.yaml \
-    --name yolov9-c-ft-taco \
+    --name yolov9-c-taco-freeze-bn \
     --hyp hyp.scratch-high.yaml \
     --min-items 0 \
     --epochs 500 \
     --close-mosaic 15 \
-    --resume
+    --freeze 10
