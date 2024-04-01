@@ -7,6 +7,7 @@ from pathlib import Path
 import numpy as np
 import torch
 from tqdm import tqdm
+import pandas as pd
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLO root directory
@@ -259,6 +260,9 @@ def run(
     stats = [torch.cat(x, 0).cpu().numpy() for x in zip(*stats)]  # to numpy
     if len(stats) and stats[0].any():
         tp, fp, p, r, f1, ap, ap_class = ap_per_class(*stats, plot=plots, save_dir=save_dir, names=names)
+        w = Path(weights[0] if isinstance(weights, list) else weights).stem if weights is not None else ''  # weights
+        df = pd.DataFrame({'tp': tp, 'fp': fp, 'p': p, 'r': r, 'f1': f1, 'class': ap_class})
+        df.to_excel(str(save_dir / f"{w}_predictions.xlsx"))
         ap50, ap = ap[:, 0], ap.mean(1)  # AP@0.5, AP@0.5:0.95
         mp, mr, map50, map = p.mean(), r.mean(), ap50.mean(), ap.mean()
     nt = np.bincount(stats[3].astype(int), minlength=nc)  # number of targets per class
