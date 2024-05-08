@@ -1,4 +1,4 @@
-path: /home/vladimir/datasets/TACO/data  # dataset root dir
+path: /home/vladimir/Work/Datasets/TACO/data  # dataset root dir
 train: train.txt  # train images (relative to 'path') ~1124 images
 val: val.txt  # val images (relative to 'path') ~184 images
 test: test.txt  # test images (relative to 'path') ~192 images

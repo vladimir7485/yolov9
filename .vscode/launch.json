@@ -12,26 +12,24 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "val",
+            "name": "val_dual",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/val.py",
+            "program": "${workspaceFolder}/val_dual.py",
             "console": "integratedTerminal",
             "args": [
-                // "--data", "data/coco.yaml",
-                // "--data", "data/taco.yaml",
-                "--data", "data/taco_with_coco_cats.yaml",
+                "--data", "data/taco.yaml",
                 "--img", "640",
-                "--batch", "32",
+                "--batch", "24",
                 "--conf", "0.001",
                 "--iou", "0.7",
                 "--device", "0",
-                "--weights", "/home/vladimir/yolo9/models/yolov9-c-converted.pt",
-                "--save-json", "--name", "/home/vladimir/yolo9/runs/yolov9_c_c_640_val",
+                "--weights", "/home/vladimir/Code/yolov9/runs/train/yolov9-c-taco-freeze-bn-ft-nwd/weights/best.pt",
+                "--name", "yolov9-c-taco-ft-nwd"
             ],
             "env": {
-                "YOLO9_WORKBENCH": "/home/vladimir/yolo9",
-                "DATASETS": "/home/vladimir/datasets"
+                "YOLO9_WORKBENCH": "/home/vladimir/Work/Projects/yolo9",
+                "DATASETS": "/home/vladimir/Work/Datasets"
             }
         },
         {
@@ -45,10 +43,10 @@
                 "--img", "640",
                 "--batch", "16",
                 "--device", "0",
-                "--weights", "/home/vladimir/yolo9/models/yolov9-c.pt",
+                "--weights", "/home/vladimir/Work/Projects/yolo9/models/yolov9-c.pt",
                 "--workers", "8",
                 "--cfg", "models/detect/yolov9-c.yaml",
-                "--name", "yolov9-c-taco-ft",
+                "--name", "yolov9-c-taco-ft-nwd",
                 "--hyp", "hyp.scratch-high.yaml",
                 "--min-items", "0",
                 "--epochs", "500",
@@ -56,8 +54,8 @@
                 "--freeze", "10"
             ],
             "env": {
-                "YOLO9_WORKBENCH": "/home/vladimir/yolo9",
-                "DATASETS": "/home/vladimir/datasets"
+                "YOLO9_WORKBENCH": "/home/vladimir/Work/Projects/yolo9",
+                "DATASETS": "/home/vladimir/Work/Datasets"
             }
         },
     ]
