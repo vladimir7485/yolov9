@@ -83,6 +83,28 @@
             }
         },
         {
+            "name": "detect",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/detect.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--source", "/home/vladimir/Work/RSM/projects/board_detect/data/board_detect/Sevsk_pos_1/20231011_103648/color_frames",
+                "--data", "data/coco.yaml",
+                "--img", "640",
+                // "--batch", "24",
+                // "--conf", "0.001",
+                // "--iou", "0.7",
+                "--device", "0",
+                "--weights", "/home/vladimir/Work/Projects/yolo9/models/gelan-c.pt",
+                "--name", "gelan-c-coco-boarddet"
+            ],
+            "env": {
+                "YOLO9_WORKBENCH": "/home/vladimir/Work/Projects/yolo9",
+                "DATASETS": "/home/vladimir/Work/Datasets"
+            }
+        },
+        {
             "name": "segment/predict",
             "type": "debugpy",
             "request": "launch",
