@@ -42,6 +42,10 @@ from utils.segment.plots import plot_images_and_masks, plot_results_with_masks
 from utils.torch_utils import (EarlyStopping, ModelEMA, de_parallel, select_device, smart_DDP, smart_optimizer,
                                smart_resume, torch_distributed_zero_first)
 
+import matplotlib
+matplotlib.use('TkAgg')
+import matplotlib.pyplot as plt
+
 LOCAL_RANK = int(os.getenv('LOCAL_RANK', -1))  # https://pytorch.org/docs/stable/elastic/run.html
 RANK = int(os.getenv('RANK', -1))
 WORLD_SIZE = int(os.getenv('WORLD_SIZE', 1))
@@ -167,7 +171,7 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
         single_cls,
         hyp=hyp,
         augment=True,
-        cache=None if opt.cache == 'val' else opt.cache,
+        cache=None, # if opt.cache == 'val' else opt.cache,
         rect=opt.rect,
         rank=LOCAL_RANK,
         workers=workers,
@@ -257,6 +261,13 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
         # Update mosaic border (optional)
         # b = int(random.uniform(0.25 * imgsz, 0.75 * imgsz + gs) // gs * gs)
         # dataset.mosaic_border = [b - imgsz, -b]  # height, width borders
+
+        # for i, (imgs, targets, paths, _, masks) in enumerate(dataset):
+        #     print(f"batch {i}")
+        #     imgs = imgs[None, ...]
+        #     plot_images_and_masks(imgs, targets, masks, [paths], save_dir / f"train_batch{i}.jpg")
+        #     if i > 3:
+        #         break
 
         mloss = torch.zeros(4, device=device)  # mean losses
         if RANK != -1:

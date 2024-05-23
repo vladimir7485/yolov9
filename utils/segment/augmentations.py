@@ -86,10 +86,18 @@ def random_perspective(im,
             xy = xy @ M.T  # transform
             xy = (xy[:, :2] / xy[:, 2:3] if perspective else xy[:, :2])  # perspective rescale or affine
 
-            # clip
-            new[i] = segment2box(xy, width, height)
             new_segments.append(xy)
+            
+            # clip
+            # new[i] = segment2box(xy, width, height)
 
+            # sample bbox separately and clip
+            xy = np.ones((2, 3))
+            xy[:, :2] = targets[i][1:].reshape((2, 2))
+            xy = xy @ M.T
+            xy = (xy[:, :2] / xy[:, 2:3] if perspective else xy[:, :2])
+            new[i] = segment2box(xy, width, height)
+            
         # filter candidates
         i = box_candidates(box1=targets[:, 1:5].T * s, box2=new.T, area_thr=0.01)
         targets = targets[i]

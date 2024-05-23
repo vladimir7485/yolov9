@@ -26,7 +26,8 @@
                 "--conf", "0.001",
                 "--iou", "0.7",
                 "--device", "0",
-                "--weights", "/home/vladimir/Work/Projects/yolo9/models/gelan-c.pt",
+                // "--weights", "/home/vladimir/Work/Projects/yolo9/models/gelan-c.pt",
+                "--weights", "/home/vladimir/Code/yolov9/runs/train/gelan-c-20240403201942-ft/weights/best.pt",
                 "--name", "gelan-c-board"
             ],
             "env": {
@@ -90,9 +91,9 @@
             "program": "${workspaceFolder}/train.py",
             "console": "integratedTerminal",
             "args": [
-                "--data", "data/taco.yaml",
+                "--data", "data/board.yaml",
                 "--img", "640",
-                "--batch", "16",
+                "--batch", "8",
                 "--device", "0",
                 "--weights", "/home/vladimir/Work/Projects/yolo9/models/gelan-c.pt",
                 "--workers", "8",
@@ -155,15 +156,16 @@
             "program": "${workspaceFolder}/detect.py",
             "console": "integratedTerminal",
             "args": [
-                "--source", "/home/vladimir/Work/RSM/projects/board_detect/data/board_detect_backload/2024_04_03_arena/20240403_201942/color_frames/",
+                "--source", "/home/vladimir/Work/RSM/projects/board_detect/data/board_detect_backload/2024_04_03_arena/20240403_201942/images/",
                 "--data", "data/coco.yaml",
                 "--img", "640",
                 // "--batch", "24",
                 // "--conf", "0.001",
                 // "--iou", "0.7",
                 "--device", "0",
-                "--weights", "/home/vladimir/Work/Projects/yolo9/models/gelan-c.pt",
-                "--name", "gelan-c-coco-boarddet"
+                // "--weights", "/home/vladimir/Work/Projects/yolo9/models/gelan-c.pt",
+                "--weights", "/home/vladimir/Code/yolov9/runs/train/gelan-c-20240403201942-ft/weights/best.pt",
+                "--name", "gelan-c-ft-coco-2024_04_03_arena-20240403_201942"
             ],
             "env": {
                 "YOLO9_WORKBENCH": "/home/vladimir/Work/Projects/yolo9",
@@ -177,15 +179,59 @@
             "program": "${workspaceFolder}/segment/predict.py",
             "console": "integratedTerminal",
             "args": [
-                "--source", "/home/vladimir/Work/RSM/projects/board_detect/data/board_detect/Sevsk_pos_1/20231011_103648/color_frames",
+                "--source", "/home/vladimir/Work/RSM/projects/board_detect/data/board_detect_backload/2024_04_03_arena/20240403_201942/images/",
                 "--data", "data/coco.yaml",
-                // "--img", "640",
-                // "--batch", "24",
-                // "--conf", "0.001",
-                // "--iou", "0.7",
+                "--device", "0",
+                // "--weights", "/home/vladimir/Work/Projects/yolo9/models/gelan-c-seg.pt",
+                "--weights", "/home/vladimir/Code/yolov9/runs/train-seg/gelan-c-seg-20240403201942-ft/weights/best.pt",
+                "--name", "gelan-c-seg-ft-correctbboxes-coco-2024_04_03_arena-20240403_201942"
+            ],
+            "env": {
+                "YOLO9_WORKBENCH": "/home/vladimir/Work/Projects/yolo9",
+                "DATASETS": "/home/vladimir/Work/Datasets"
+            }
+        },
+        {
+            "name": "segment/train",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/segment/train.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "args": [
+                "--data", "data/board.yaml",
+                "--img", "640",
+                "--batch", "8",
                 "--device", "0",
                 "--weights", "/home/vladimir/Work/Projects/yolo9/models/gelan-c-seg.pt",
-                "--name", "gelan-c-seg-coco-boarddet"
+                "--workers", "8",
+                "--cfg", "models/segment/gelan-c-seg.yaml",
+                "--name", "gelan-c-seg-20240403201942-ft",
+                "--hyp", "hyp.scratch-high.yaml",
+                "--no-overlap",
+                "--epochs", "50",
+                "--close-mosaic", "10",
+                "--freeze", "10"
+            ],
+            "env": {
+                "YOLO9_WORKBENCH": "/home/vladimir/Work/Projects/yolo9",
+                "DATASETS": "/home/vladimir/Work/Datasets"
+            }
+        },
+        {
+            "name": "segment/val",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/segment/val.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--data", "data/board.yaml",
+                "--img", "640",
+                "--batch", "8",
+                "--device", "0",
+                // "--weights", "/home/vladimir/Work/Projects/yolo9/models/gelan-c-seg.pt",
+                "--weights", "/home/vladimir/Code/yolov9/runs/train-seg/gelan-c-seg-20240403201942-ft4/weights/best.pt",
+                "--name", "gelan-c-seg-20240403201942-pretrained",
             ],
             "env": {
                 "YOLO9_WORKBENCH": "/home/vladimir/Work/Projects/yolo9",
