@@ -128,6 +128,22 @@
             }
         },
         {
+            "name": "export",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/export.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--weights", "/home/vladimir/Code/yolov9/runs/train-seg/gelan-c-seg-boards-ft/weights/best.pt",
+                "--include", "engine",
+                "--device", "0"
+            ],
+            "env": {
+                "YOLO9_WORKBENCH": "/home/vladimir/Work/Projects/yolo9",
+                "DATASETS": "/home/vladimir/Work/Datasets"
+            }
+        },
+        {
             "name": "detect_dual",
             "type": "debugpy",
             "request": "launch",
@@ -179,12 +195,12 @@
             "program": "${workspaceFolder}/segment/predict.py",
             "console": "integratedTerminal",
             "args": [
-                "--source", "/home/vladimir/Work/RSM/projects/board_detect/data/board_detect_backload/2024_04_03_arena/20240403_201942/images/",
+                "--source", "/home/vladimir/Work/RSM/projects/board_detect/data/board_detect_backload/Sevsk_pos_2/20231012_131412/color_frames/",
                 "--data", "data/coco.yaml",
                 "--device", "0",
                 // "--weights", "/home/vladimir/Work/Projects/yolo9/models/gelan-c-seg.pt",
-                "--weights", "/home/vladimir/Code/yolov9/runs/train-seg/gelan-c-seg-20240403201942-ft/weights/best.pt",
-                "--name", "gelan-c-seg-ft-correctbboxes-coco-2024_04_03_arena-20240403_201942"
+                "--weights", "/home/vladimir/Code/yolov9/runs/train-seg/gelan-c-seg-boards-ft/weights/best.engine",
+                "--name", "gelan-c-seg-boards-ft-Sevsk_pos_2-20231012_131412"
             ],
             "env": {
                 "YOLO9_WORKBENCH": "/home/vladimir/Work/Projects/yolo9",
@@ -206,10 +222,10 @@
                 "--weights", "/home/vladimir/Work/Projects/yolo9/models/gelan-c-seg.pt",
                 "--workers", "8",
                 "--cfg", "models/segment/gelan-c-seg.yaml",
-                "--name", "gelan-c-seg-20240403201942-ft",
+                "--name", "gelan-c-seg-boards-ft",
                 "--hyp", "hyp.scratch-high.yaml",
                 "--no-overlap",
-                "--epochs", "50",
+                "--epochs", "20",
                 "--close-mosaic", "10",
                 "--freeze", "10"
             ],

@@ -4,6 +4,10 @@ import platform
 import sys
 from pathlib import Path
 
+import matplotlib
+matplotlib.use('TkAgg')
+import matplotlib.pyplot as plt
+
 import torch
 
 FILE = Path(__file__).resolve()
@@ -88,6 +92,8 @@ def run(
     model.warmup(imgsz=(1 if pt else bs, 3, *imgsz))  # warmup
     seen, windows, dt = 0, [], (Profile(), Profile(), Profile())
     for path, im, im0s, vid_cap, s in dataset:
+        if os.path.basename(path) == '001200.png':
+            pass
         with dt[0]:
             im = torch.from_numpy(im).to(model.device)
             im = im.half() if model.fp16 else im.float()  # uint8 to fp16/32
@@ -124,7 +130,8 @@ def run(
             annotator = Annotator(im0, line_width=line_thickness, example=str(names))
             if len(det):
                 # masks = process_mask(proto[i], det[:, 6:], det[:, :4], im.shape[2:], upsample=True)  # HWC
-                masks = process_mask(proto[2].squeeze(0), det[:, 6:], det[:, :4], im.shape[2:], upsample=True)  # HWC
+                # masks = process_mask(proto[2].squeeze(0), det[:, 6:], det[:, :4], im.shape[2:], upsample=True)  # HWC
+                masks = process_mask(proto.squeeze(0), det[:, 6:], det[:, :4], im.shape[2:], upsample=True)  # HWC
                 det[:, :4] = scale_boxes(im.shape[2:], det[:, :4], im0.shape).round()  # rescale boxes to im0 size
 
                 # Segments

@@ -1,4 +1,5 @@
-path: /home/vladimir/Work/RSM/projects/board_detect/data/board_detect_backload/2024_04_03_arena/20240403_201942  # dataset root dir
+# path: /home/vladimir/Work/RSM/projects/board_detect/data/board_detect_backload/2024_04_03_arena/20240403_201942  # dataset root dir
+path: /home/vladimir/Work/RSM/projects/board_detect/data/board_detect_backload  # dataset root dir
 train: train.txt  # train images (relative to 'path') 118287 images
 val: val.txt  # val images (relative to 'path') 5000 images
 test: test.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
