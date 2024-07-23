@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        // Current Filee
         {
             "name": "Python Debugger: Current File",
             "type": "debugpy",
@@ -11,6 +12,8 @@
             "program": "${file}",
             "console": "integratedTerminal"
         },
+
+        // val_gelan
         {
             "name": "val_gelan",
             "type": "debugpy",
@@ -35,6 +38,7 @@
                 "DATASETS": "/home/vladimir/Work/Datasets"
             }
         },
+        // val_dual
         {
             "name": "val_dual",
             "type": "debugpy",
@@ -58,32 +62,8 @@
                 "DATASETS": "/home/vladimir/Work/Datasets"
             }
         },
-        {
-            "name": "train_dual",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/train_dual.py",
-            "console": "integratedTerminal",
-            "args": [
-                "--data", "data/taco.yaml",
-                "--img", "640",
-                "--batch", "16",
-                "--device", "0",
-                "--weights", "/home/vladimir/Work/Projects/yolo9/models/yolov9-c.pt",
-                "--workers", "8",
-                "--cfg", "models/detect/yolov9-c.yaml",
-                "--name", "yolov9-c-taco-ft-nwd",
-                "--hyp", "hyp.scratch-high.yaml",
-                "--min-items", "0",
-                "--epochs", "500",
-                "--close-mosaic", "15",
-                "--freeze", "10"
-            ],
-            "env": {
-                "YOLO9_WORKBENCH": "/home/vladimir/Work/Projects/yolo9",
-                "DATASETS": "/home/vladimir/Work/Datasets"
-            }
-        },
+        
+        // train_gelan
         {
             "name": "train_gelan",
             "type": "debugpy",
@@ -110,6 +90,35 @@
                 "DATASETS": "/home/vladimir/Work/Datasets"
             }
         },
+        // train_dual
+        {
+            "name": "train_dual",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/train_dual.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--data", "data/taco.yaml",
+                "--img", "640",
+                "--batch", "16",
+                "--device", "0",
+                "--weights", "/home/vladimir/Work/Projects/yolo9/models/yolov9-c.pt",
+                "--workers", "8",
+                "--cfg", "models/detect/yolov9-c.yaml",
+                "--name", "yolov9-c-taco-ft-nwd",
+                "--hyp", "hyp.scratch-high.yaml",
+                "--min-items", "0",
+                "--epochs", "500",
+                "--close-mosaic", "15",
+                "--freeze", "10"
+            ],
+            "env": {
+                "YOLO9_WORKBENCH": "/home/vladimir/Work/Projects/yolo9",
+                "DATASETS": "/home/vladimir/Work/Datasets"
+            }
+        },
+        
+        // convert
         {
             "name": "convert",
             "type": "debugpy",
@@ -127,6 +136,8 @@
                 "DATASETS": "/home/vladimir/Work/Datasets"
             }
         },
+        
+        // export
         {
             "name": "export",
             "type": "debugpy",
@@ -143,6 +154,8 @@
                 "DATASETS": "/home/vladimir/Work/Datasets"
             }
         },
+        
+        // detect_dual
         {
             "name": "detect_dual",
             "type": "debugpy",
@@ -165,6 +178,7 @@
                 "DATASETS": "/home/vladimir/Work/Datasets"
             }
         },
+        // detect
         {
             "name": "detect",
             "type": "debugpy",
@@ -188,25 +202,8 @@
                 "DATASETS": "/home/vladimir/Work/Datasets"
             }
         },
-        {
-            "name": "segment/predict",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/segment/predict.py",
-            "console": "integratedTerminal",
-            "args": [
-                "--source", "/home/vladimir/Work/RSM/projects/board_detect/data/board_detect_backload/Sevsk_pos_2/20231012_131412/color_frames/",
-                "--data", "data/coco.yaml",
-                "--device", "0",
-                // "--weights", "/home/vladimir/Work/Projects/yolo9/models/gelan-c-seg.pt",
-                "--weights", "/home/vladimir/Code/yolov9/runs/train-seg/gelan-c-seg-boards-ft/weights/best.engine",
-                "--name", "gelan-c-seg-boards-ft-Sevsk_pos_2-20231012_131412"
-            ],
-            "env": {
-                "YOLO9_WORKBENCH": "/home/vladimir/Work/Projects/yolo9",
-                "DATASETS": "/home/vladimir/Work/Datasets"
-            }
-        },
+        
+        // segment/train
         {
             "name": "segment/train",
             "type": "debugpy",
@@ -215,18 +212,18 @@
             "console": "integratedTerminal",
             "justMyCode": false,
             "args": [
-                "--data", "data/board.yaml",
+                "--data", "data/backload240723.yaml",
                 "--img", "640",
-                "--batch", "8",
+                "--batch", "32",
                 "--device", "0",
                 "--weights", "/home/vladimir/Work/Projects/yolo9/models/gelan-c-seg.pt",
-                "--workers", "8",
+                "--workers", "0",
                 "--cfg", "models/segment/gelan-c-seg.yaml",
-                "--name", "gelan-c-seg-boards-ft",
-                "--hyp", "hyp.scratch-high.yaml",
+                "--name", "gelan-c-seg-backload240723-ft",
+                "--hyp", "hyp.scratch-high-no-aug.yaml",
                 "--no-overlap",
-                "--epochs", "20",
-                "--close-mosaic", "10",
+                "--epochs", "100",
+                "--close-mosaic", "0",
                 "--freeze", "10"
             ],
             "env": {
@@ -234,6 +231,28 @@
                 "DATASETS": "/home/vladimir/Work/Datasets"
             }
         },
+        // segment/predict
+        {
+            "name": "segment/predict",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/segment/predict.py",
+            "console": "integratedTerminal",
+            "args": [
+                // "--source", "/home/vladimir/Work/RSM/projects/board_detect/data/board_detect_backload/Sevsk_pos_2/20231012_141708/color_frames/",
+                "--source", "/home/vladimir/Work/RSM/projects/board_detect/data/board_detect_backload/2024_04_03_arena/20240403_201907/color_frames/",
+                // "--source", "/home/vladimir/Work/RSM/projects/board_detect/data/board_detect_backload/2024_04_03_arena/20240417_102034/color_frames/",
+                "--data", "data/backload240723.yaml",
+                "--device", "0",
+                "--weights", "/home/vladimir/Code/yolov9/runs/train-seg/gelan-c-seg-backload240723-ft/weights/best.pt",
+                "--name", "gelan-c-seg-backload240723-ft"
+            ],
+            "env": {
+                "YOLO9_WORKBENCH": "/home/vladimir/Work/Projects/yolo9",
+                "DATASETS": "/home/vladimir/Work/Datasets"
+            }
+        },
+        // segment/val
         {
             "name": "segment/val",
             "type": "debugpy",
@@ -254,6 +273,8 @@
                 "DATASETS": "/home/vladimir/Work/Datasets"
             }
         },
+        
+        // panoptic/predict
         {
             "name": "panoptic/predict",
             "type": "debugpy",
