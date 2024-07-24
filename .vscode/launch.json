@@ -145,8 +145,8 @@
             "program": "${workspaceFolder}/export.py",
             "console": "integratedTerminal",
             "args": [
-                "--weights", "/home/vladimir/Code/yolov9/runs/train-seg/gelan-c-seg-boards-ft/weights/best.pt",
-                "--include", "engine",
+                "--weights", "/home/vladimir/Code/yolov9/runs/train-seg/gelan-c-seg-backload240723-ft/weights/gelan-c-seg-backload240723-ft-best.pt",
+                "--include", "onnx",
                 "--device", "0"
             ],
             "env": {
@@ -239,12 +239,10 @@
             "program": "${workspaceFolder}/segment/predict.py",
             "console": "integratedTerminal",
             "args": [
-                // "--source", "/home/vladimir/Work/RSM/projects/board_detect/data/board_detect_backload/Sevsk_pos_2/20231012_141708/color_frames/",
-                "--source", "/home/vladimir/Work/RSM/projects/board_detect/data/board_detect_backload/2024_04_03_arena/20240403_201907/color_frames/",
-                // "--source", "/home/vladimir/Work/RSM/projects/board_detect/data/board_detect_backload/2024_04_03_arena/20240417_102034/color_frames/",
+                "--source", "/home/vladimir/Code/catkin_ws/data/recBackload/frame_color_10.png",
                 "--data", "data/backload240723.yaml",
                 "--device", "0",
-                "--weights", "/home/vladimir/Code/yolov9/runs/train-seg/gelan-c-seg-backload240723-ft/weights/best.pt",
+                "--weights", "/home/vladimir/Code/yolov9/runs/train-seg/gelan-c-seg-backload240723-ft/weights/gelan-c-seg-backload240723-ft-best.onnx",
                 "--name", "gelan-c-seg-backload240723-ft"
             ],
             "env": {
