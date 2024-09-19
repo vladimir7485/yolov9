@@ -212,14 +212,14 @@
             "console": "integratedTerminal",
             "justMyCode": false,
             "args": [
-                "--data", "data/backload240723.yaml",
+                "--data", "data/samara240919.yaml",
                 "--img", "640",
                 "--batch", "32",
                 "--device", "0",
                 "--weights", "/home/vladimir/Work/Projects/yolo9/models/gelan-c-seg.pt",
                 "--workers", "0",
                 "--cfg", "models/segment/gelan-c-seg.yaml",
-                "--name", "gelan-c-seg-backload240723-ft",
+                "--name", "gelan-c-seg-samara240919-ft",
                 "--hyp", "hyp.scratch-high-no-aug.yaml",
                 "--no-overlap",
                 "--epochs", "100",
@@ -233,13 +233,13 @@
         },
         // segment/predict
         {
-            "name": "segment/predict",
+             "name": "segment/predict",
             "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/segment/predict.py",
             "console": "integratedTerminal",
             "args": [
-                "--source", "/home/vladimir/Code/catkin_ws/data/recBackload/frame_color_10.png",
+                "--source", "/home/vladimir/Work/RSM/projects/board_detect/data/board_detect/debug_data/2024_09_08_samara_backload_color",
                 "--data", "data/backload240723.yaml",
                 "--device", "0",
                 "--weights", "/home/vladimir/Code/yolov9/runs/train-seg/gelan-c-seg-backload240723-ft/weights/gelan-c-seg-backload240723-ft-best.onnx",

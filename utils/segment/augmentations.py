@@ -68,17 +68,12 @@ def random_perspective(im,
         else:  # affine
             im = cv2.warpAffine(im, M[:2], dsize=(width, height), borderValue=(114, 114, 114))
 
-    # Visualize
-    # import matplotlib.pyplot as plt
-    # ax = plt.subplots(1, 2, figsize=(12, 6))[1].ravel()
-    # ax[0].imshow(im[:, :, ::-1])  # base
-    # ax[1].imshow(im2[:, :, ::-1])  # warped
-
     # Transform label coordinates
     n = len(targets)
     new_segments = []
+    new_bboxes = []
+    new_targets = []
     if n:
-        new = np.zeros((n, 4))
         segments = resample_segments(segments)  # upsample
         for i, segment in enumerate(segments):
             xy = np.ones((len(segment), 3))
@@ -86,22 +81,43 @@ def random_perspective(im,
             xy = xy @ M.T  # transform
             xy = (xy[:, :2] / xy[:, 2:3] if perspective else xy[:, :2])  # perspective rescale or affine
 
+            # clip
+            x, y = xy[:, 0], xy[:, 1]  # segment xy
+            inside = (x >= 0) & (y >= 0) & (x <= width) & (y <= height)
+            xy = xy[inside]
+            if len(xy) == 0:
+                continue
+            if len(xy) != len(segment):
+                xy = resample_segments([xy])[0]
+
             new_segments.append(xy)
             
-            # clip
-            # new[i] = segment2box(xy, width, height)
-
             # sample bbox separately and clip
             xy = np.ones((2, 3))
             xy[:, :2] = targets[i][1:].reshape((2, 2))
             xy = xy @ M.T
             xy = (xy[:, :2] / xy[:, 2:3] if perspective else xy[:, :2])
-            new[i] = segment2box(xy, width, height)
             
+            # clip
+            x1, y1, x2, y2 = xy.reshape((-1))
+            x1, x2 = [min(max(v, 0), width - 1) for v in [x1, x2]]
+            y1, y2 = [min(max(v, 0), height - 1) for v in [y1, y2]]
+            xy = np.array([x1, y1, x2, y2]).reshape((2, 2))
+            
+            new_bboxes.append(segment2box(xy, width, height))
+
+            new_targets.append(targets[i])
+
         # filter candidates
-        i = box_candidates(box1=targets[:, 1:5].T * s, box2=new.T, area_thr=0.01)
-        targets = targets[i]
-        targets[:, 1:5] = new[i]
+        if len(new_segments) == 0:
+            return im, np.empty((0, 5), np.float32), new_segments
+        
+        new_bboxes = np.array(new_bboxes)
+        new_targets = np.array(new_targets)
+        
+        i = box_candidates(box1=new_targets[:, 1:5].T * s, box2=new_bboxes.T, area_thr=0.01)
+        new_targets = new_targets[i]
+        new_targets[:, 1:5] = new_bboxes[i]
         new_segments = np.array(new_segments)[i]
 
-    return im, targets, new_segments
+    return im, new_targets, new_segments

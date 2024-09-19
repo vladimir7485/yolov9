@@ -1,0 +1,14 @@
+python  segment/train.py \
+    --data data/check240919.yaml \
+    --img 640 \
+    --batch 32 \
+    --device 0 \
+    --weights /home/vladimir/Work/Projects/yolo9/models/gelan-c-seg.pt \
+    --workers 0 \
+    --cfg models/segment/gelan-c-seg.yaml \
+    --name gelan-c-seg-check240919-ft \
+    --hyp hyp.scratch-high-no-aug.yaml \
+    --epochs 100 \
+    --close-mosaic 0 \
+    --freeze 10 \
+    --no-overlap
